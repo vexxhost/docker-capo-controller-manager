@@ -10,10 +10,11 @@
     {
       "customType": "regex",
       "fileMatch": ["Dockerfile"],
-      "matchStrings": [
-        "# renovate: name=(?<depName>.+?) repo=(?<packageName>.+?) branch=(?<currentValue>.+?)\nARG .+?_GIT_REF=(?<currentDigest>.+?)\n"
-      ],
-      "datasourceTemplate": "git-refs"
+      "matchStrings": ["CAPO_VERSION=(?<currentValue>v[0-9.]+)"],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "kubernetes-sigs/cluster-api-provider-openstack",
+      "versioningTemplate": "semver",
+      "allowedVersions": "^0.11"
     }
   ]
 }

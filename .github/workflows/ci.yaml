@@ -18,5 +18,5 @@ jobs:
   image:
     uses: vexxhost/github-actions/.github/workflows/image.yml@main
     with:
-      image-ref: ghcr.io/${{ github.repository_owner }}/capo-controller-manager
+      image-ref: ghcr.io/${{ github.repository_owner }}/capo-controller-manager:0.11.5-1
       push: ${{ github.ref == 'refs/heads/main' }}
