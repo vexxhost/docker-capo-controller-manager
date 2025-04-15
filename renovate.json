@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "docker:pinDigests",
+    "group:allDigest",
+    "helpers:pinGitHubActionDigestsToSemver"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["Dockerfile"],
+      "matchStrings": ["CAPO_VERSION=(?<currentValue>v[0-9.]+)"],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "kubernetes-sigs/cluster-api-provider-openstack",
+      "versioningTemplate": "semver",
+      "allowedVersions": "^0.11"
+    }
+  ]
+}

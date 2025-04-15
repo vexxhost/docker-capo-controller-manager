@@ -1,0 +1,33 @@
+From 9fc67a78bf5f541c68c8065c3f47f8a7d9b84490 Mon Sep 17 00:00:00 2001
+From: "Oleksandr K." <okozachenko@vexxhost.com>
+Date: Fri, 28 Mar 2025 04:16:13 +0100
+Subject: [PATCH] fix openstackserver controller concurrency
+
+---
+ controllers/openstackserver_controller.go | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/controllers/openstackserver_controller.go b/controllers/openstackserver_controller.go
+index ebcf78c9..bb1a6e5b 100644
+--- a/controllers/openstackserver_controller.go
++++ b/controllers/openstackserver_controller.go
+@@ -169,7 +169,7 @@ func patchServer(ctx context.Context, patchHelper *patch.Helper, openStackServer
+ 	return patchHelper.Patch(ctx, openStackServer, options...)
+ }
+ 
+-func (r *OpenStackServerReconciler) SetupWithManager(ctx context.Context, mgr ctrl.Manager, _ controller.Options) error {
++func (r *OpenStackServerReconciler) SetupWithManager(ctx context.Context, mgr ctrl.Manager, options controller.Options) error {
+ 	const imageRefPath = "spec.image.imageRef.name"
+ 
+ 	log := ctrl.LoggerFrom(ctx)
+@@ -189,6 +189,7 @@ func (r *OpenStackServerReconciler) SetupWithManager(ctx context.Context, mgr ct
+ 	}
+ 
+ 	return ctrl.NewControllerManagedBy(mgr).
++		WithOptions(options).
+ 		For(&infrav1alpha1.OpenStackServer{}).
+ 		Watches(&orcv1alpha1.Image{},
+ 			handler.EnqueueRequestsFromMapFunc(func(ctx context.Context, obj client.Object) []reconcile.Request {
+-- 
+2.34.1
+
