@@ -14,4 +14,4 @@ jobs:
     steps:
       - uses: vexxhost/github-actions/scan-image@main
         with:
-          image-ref: ghcr.io/${{ github.repository_owner }}/capo-controller-manager:edge
+          image-ref: ghcr.io/${{ github.repository_owner }}/capo-controller-manager:0.11.5-1
